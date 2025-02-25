@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4" 
+       integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" 
+       crossorigin="anonymous">
+   </script>
+
+   
+</head>
+ <style>
+
+body {
+           font-family: 'Arial', sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f7f8f5;
+           color: #333;
+           text-align: center;
+       }
+
+       .container {
+           max-width: 1000px;
+           margin: 40px auto;
+           padding: 40px;
+           background-color: white;
+           border-radius: 10px;
+           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+           border: 1px solid #d4ff00;
+       }
+       div {
+           font-weight: bold;
+       }
+
+       h1 {
+           color: #d32f2f;
+           font-size: 48px;
+           font-weight: bold;
+           margin-bottom: 20px;
+       }
+
+       label {
+           font-size: 36px;
+           font-weight: bold;
+           color: #000000;
+           display: block;
+           margin-bottom: 20px;
+           text-transform:uppercase;
+       }
+
+       table {
+           width: 100%;
+           border-collapse: separate;
+           margin: 20px 0;
+           font-size: 24px;
+       }
+
+       th {
+           padding: 15px;
+           background-color: #ff0000;
+           color: white;
+           font-size: 28px;
+           border-bottom: 2px solid #900000;
+       }
+
+       td {
+           padding: 15px;
+           font-weight: bold;
+           border-bottom: 2px solid #ddd;
+           text-transform:uppercase;
+       }
+
+       tr:hover {
+           background-color: #aa8eb9;
+       }
+
+</style>
+
+<% function maskText(text) { %>
+   <%= text.length > 2 ? text.substring(0, 2) + "*".repeat(text.length - 2) : text %>
+<% } %>
+<% function maskTextt(text) { %>
+   <%= text.length > 3 ? text.substring(0, 3) + "*".repeat(text.length - 3) : text %>
+<% } %>
+<script>
+   function saatGuncelle() {
+       var tarih = new Date();
+       var saat = tarih.getHours();
+       var dakika = tarih.getMinutes();
+       var saniye = tarih.getSeconds();
+       
+       saat = (saat < 10) ? "0" + saat : saat;
+       dakika = (dakika < 10) ? "0" + dakika : dakika;
+       saniye = (saniye < 10) ? "0" + saniye : saniye;
+
+       var zaman = saat + ":" + dakika + ":" + saniye;
+
+       document.getElementById("saat").innerText = zaman;
+   }
+
+   setInterval(saatGuncelle);
+</script>
+
+
+<body hx-get="/getData" hx-trigger="every 2s" hx-target="#hastaForm" hx-swap="innerHTML">
+
+   <form id="hastaForm">
+       <div class="header">ESKİŞEHİR İL SAĞLIK MÜDÜRLÜĞÜ</div>
+<div class="header">ESKİŞEHİR AĞIZ VE DİŞ SAĞLIĞI HASTANESİ</div>
+
+       <center><img src="https://dosyahastane.saglik.gov.tr/WebFiles/logolar/logo-tr.png" alt="Hastane Logosu" width="150" height="150" class="logo"></center>
+       <center><label>AMELİYATHANE</center><br>
+       <table>
+           <tr>
+               <th>HASTA ADI</th>
+               <th>ODA NUMARASI</th>
+               <th>DURUMU</th>
+
+           </tr>
+           
+           <tr>
+               <td><center><%= maskText(isim) %> <%= maskTextt(soyad) %></center></td>
+               <td><center><%= oda %></center></td>
+               <td><center><%= durum %></center></td>
+           </tr>
+       </table>
+       <center><h1>BEKLENİYORSUNUZ!!</h1></center>
+       
+       <div  id="saat"></div>
+   </form>
+   
+    
+</body>
+</html>

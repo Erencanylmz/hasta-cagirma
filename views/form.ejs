@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasta Çağırma</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f2e7; 
+            color: #333; 
+        }
+       
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            border: 1px solid #c6e1c1; 
+        }
+        
+        
+        h1 {
+            color: #000000;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #2e7d32;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+        
+        b {
+            font-weight: bold;
+            color: #d32f2f; 
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        
+        button {
+            background-color: #ff9900; 
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: #ffff00; 
+        }
+        
+       
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #388e3c; 
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+       
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        
+            input, select, button {
+                font-size: 14px;
+            }
+        
+            h1 {
+                font-size: 24px;
+            }
+        
+            h2 {
+                font-size: 20px;
+            }
+        }
+        
+        
+        </style>
+    <script>
+        let yeniPencere;
+
+        function paneliAc() {
+            if (!yeniPencere || yeniPencere.closed) {
+                yeniPencere = window.open("/panel");
+            } else {
+                yeniPencere.focus();
+            }
+        }
+
+        function inputlariGuncelle() {
+            let isim = document.getElementById("isim").value;
+            let oda = document.getElementById("oda").value;
+            let soyad = document.getElementById("soyad").value;
+            let durum = document.getElementById("durum").value;
+
+            fetch("/updateData", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ isim,soyad, oda ,durum})
+            });
+        }
+    </script>
+    <script>
+        let yeniPencere1;
+
+        function paneliAc1() {
+            if (!yeniPencere1 || yeniPencere1.closed) {
+                yeniPencere1 = window.open("/panel1");
+            } else {
+                yeniPencere1.focus();
+            }
+        }
+
+        function inputlariGuncelle1() {
+            let adad = document.getElementById("adad").value;
+            let sonra = document.getElementById("sonra").value;
+            let soyadad = document.getElementById("soyadad").value;
+
+            fetch("/updateData1", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ adad,soyadad, sonra })
+            });
+        }
+    </script>
+    <script>
+        let yeniPencere2;
+
+        function paneliAc2() {
+            if (!yeniPencere2 || yeniPencere2.closed) {
+                yeniPencere2 = window.open("/panel2");
+            } else {
+                yeniPencere2.focus();
+            }
+        }
+
+        function inputlariGuncelle2() {
+            let oldu = document.getElementById("oldu").value;
+            let aa = document.getElementById("aa").value;
+            let lastname = document.getElementById("lastname").value;
+            let door = document.getElementById("door").value;
+            let olay = document.getElementById("olay").value;
+
+            fetch("/updateData2", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ oldu, lastname, aa, door, olay })
+            });
+        }
+    </script>
+    
+</head>
+
+<body>
+    
+    <form  hx-target="this" hx-swap="innerHTML"></form>
+        
+    <div id="anasayfa"  class="container"  hx-target="this" hx-swap="outerHTML"  >   
+        <center><img src="https://dosyahastane.saglik.gov.tr/WebFiles/logolar/logo-tr.png" alt="Hastane Logosu" class="logo"></center>
+        <h1>HASTA ÇAĞIRMA</h1>
+        
+           
+        <button type="button" hx-post="/ameliyathane">ameliyathane</button>
+        <button type="button" hx-post="/gise">gişe</button>
+        <button type="button" hx-post="/rontgen">röntgen</button>
+    </div>
+        </form>
+       
+</body>
+</html>
