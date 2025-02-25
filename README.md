@@ -1,4 +1,4 @@
-HTMX-HTML-HTMX-EXPRESS
+HTMX-HTML-EJS-EXPRESS
 
 Uygulama dosyalarını bi dosyaya atın ve visual studio code ile açın terminalden express ve electronu kurun ve 2 farklı terminale -node app.js ve -npm run dev komutlarını çalıştırın ve denemeye başlayın.
 
